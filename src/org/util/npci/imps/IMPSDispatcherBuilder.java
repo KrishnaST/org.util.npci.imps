@@ -14,8 +14,8 @@ public final class IMPSDispatcherBuilder extends IssuerDispatcherBuilder {
 	}
 
 	@Override
-	public final IssuerDispatcher build(CoreConfig coreConfig) {
-		return null;
+	public final IssuerDispatcher build(CoreConfig config) {
+		return new IMPSDispatcher(config);
 	}
 
 }
