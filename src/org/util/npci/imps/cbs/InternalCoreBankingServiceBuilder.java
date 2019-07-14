@@ -14,8 +14,8 @@ public final class InternalCoreBankingServiceBuilder extends CoreBankingServiceB
 
 	@Override
 	public final CoreBankingService build(final CoreConfig config) throws ConfigurationNotFoundException {
-		if("SWIFT20".equals(config.coreBankingType)) return new Swift20CoreBankingService(config);
-		else if("SWIFT63".equals(config.coreBankingType)) return new Swift63CoreBankingService(config);
+		if ("SWIFT20".equals(config.coreBankingType)) return new Swift20CoreBankingService(config);
+		else if ("SWIFT63".equals(config.coreBankingType)) return new Swift63CoreBankingService(config);
 		throw new ConfigurationNotFoundException("");
 	}
 

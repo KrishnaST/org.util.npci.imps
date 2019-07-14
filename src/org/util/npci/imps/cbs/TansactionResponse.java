@@ -1,6 +1,5 @@
 package org.util.npci.imps.cbs;
 
-
 public class TansactionResponse {
 
 	public String responseCode;

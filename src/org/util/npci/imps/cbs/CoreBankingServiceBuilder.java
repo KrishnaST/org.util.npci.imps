@@ -15,6 +15,6 @@ public abstract class CoreBankingServiceBuilder {
 	public static final CoreBankingService getIssuerDispatcher(final CoreConfig config) throws ConfigurationNotFoundException {
 		final ServiceLoader<CoreBankingServiceBuilder> serviceLoader = ServiceLoader.load(CoreBankingServiceBuilder.class, CoreBankingServiceBuilder.class.getClassLoader());
 		for (CoreBankingServiceBuilder builder : serviceLoader) { if (builder.getCoreBankingServices().contains(config.coreBankingType)) return builder.build(config); }
-		throw new ConfigurationNotFoundException("could not find core banking service with name : "+config.coreBankingType);
+		throw new ConfigurationNotFoundException("could not find core banking service with name : " + config.coreBankingType);
 	}
 }

@@ -14,5 +14,5 @@ public final class IMPSDispatcher extends LogonDispatcher {
 	public final boolean dispatch(ISO8583Message request) {
 		return super.dispatch(request);
 	}
-	
+
 }
