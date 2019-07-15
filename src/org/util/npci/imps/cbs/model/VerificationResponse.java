@@ -1,4 +1,4 @@
-package org.util.npci.imps.cbs;
+package org.util.npci.imps.cbs.model;
 
 public class VerificationResponse {
 
