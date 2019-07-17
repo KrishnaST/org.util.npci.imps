@@ -3,6 +3,8 @@
  */
 module org.util.npci.imps {
 
+	requires transitive java.sql;
+	
 	requires transitive org.util.iso8583;
 	requires transitive org.util.iso8583.npci;
 	requires transitive org.util.npci.coreconnect;
