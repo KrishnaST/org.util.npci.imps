@@ -11,7 +11,6 @@ module org.util.npci.imps {
 	
 	requires transitive retrofit2;
 	requires transitive okhttp3;
-	requires transitive okhttp3.logging;
 	requires transitive retrofit2.converter.jackson;
 	
 	requires transitive com.fasterxml.jackson.core;
