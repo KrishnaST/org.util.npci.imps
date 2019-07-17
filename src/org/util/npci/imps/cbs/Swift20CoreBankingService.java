@@ -3,10 +3,12 @@ package org.util.npci.imps.cbs;
 import java.util.concurrent.TimeUnit;
 
 import org.util.iso8583.ISO8583Message;
+import org.util.nanolog.Logger;
 import org.util.npci.api.ConfigurationNotFoundException;
 import org.util.npci.api.PropertyName;
 import org.util.npci.coreconnect.CoreConfig;
 import org.util.npci.coreconnect.util.RetroClientBuilder;
+import org.util.npci.imps.IMPSDispatcher;
 import org.util.npci.imps.cbs.model.TansactionResponse;
 import org.util.npci.imps.cbs.model.VerificationResponse;
 
@@ -16,8 +18,8 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 
 	private final Retrofit retrofit;
 
-	public Swift20CoreBankingService(CoreConfig config) throws ConfigurationNotFoundException {
-		super(config);
+	public Swift20CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) throws ConfigurationNotFoundException {
+		super(config, dispatcher);
 		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(PropertyName.CBS_IP))
 				.withLogging(config.getStringSupressException(PropertyName.RETROFIT_LOGGING_LEVEL))
 				.readTimeout(config.getIntSupressException(PropertyName.RETROFIT_READ_TIMEOUT_SEC), TimeUnit.SECONDS)
@@ -33,12 +35,12 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 	}
 
 	@Override
-	public final TansactionResponse transaction(ISO8583Message request) {
+	public final TansactionResponse transaction(final ISO8583Message request, final Logger logger) {
 		return null;
 	}
 
 	@Override
-	public final VerificationResponse verification(ISO8583Message request) {
+	public final VerificationResponse verification(final ISO8583Message request, final Logger logger) {
 		return null;
 	}
 
