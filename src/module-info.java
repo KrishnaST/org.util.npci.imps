@@ -17,6 +17,9 @@ module org.util.npci.imps {
 	requires transitive com.fasterxml.jackson.databind;
 	requires transitive com.fasterxml.jackson.annotation;
 
+	uses org.util.npci.imps.db.DatabaseServiceBuilder;
+	uses org.util.npci.imps.cbs.CoreBankingServiceBuilder;
+	
 	provides org.util.npci.coreconnect.issuer.IssuerDispatcherBuilder with org.util.npci.imps.IMPSDispatcherBuilder;
 	provides org.util.npci.imps.db.DatabaseServiceBuilder with org.util.npci.imps.db.InternalDatabaseServiceBuilder;
 
