@@ -23,7 +23,9 @@ public final class IMPSDispatcher extends LogonDispatcher {
 	public IMPSDispatcher(CoreConfig config) throws ConfigurationNotFoundException {
 		super(config);
 		databaseService    = DatabaseServiceBuilder.getDatabaseService(config, this);
+		config.corelogger.error(config.bankId+" : loaded database service :"+databaseService.getName());
 		coreBankingService = CoreBankingServiceBuilder.getCoreBankingService(config, this);
+		config.corelogger.error(config.bankId+" : loaded core banking service :"+coreBankingService.getName());
 	}
 
 	@Override

@@ -22,5 +22,6 @@ module org.util.npci.imps {
 	
 	provides org.util.npci.coreconnect.issuer.IssuerDispatcherBuilder with org.util.npci.imps.IMPSDispatcherBuilder;
 	provides org.util.npci.imps.db.DatabaseServiceBuilder with org.util.npci.imps.db.InternalDatabaseServiceBuilder;
+	provides org.util.npci.imps.cbs.CoreBankingServiceBuilder with org.util.npci.imps.cbs.InternalCoreBankingServiceBuilder;
 
 }
