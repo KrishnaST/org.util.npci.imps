@@ -23,13 +23,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Tag;
 
 public final class Swift63CoreBankingService extends CoreBankingService {
 
 	public interface RetroCoreBankingService {
 
 		@POST("InwardImpsTransaction")
-		Call<IMPSTransactionResponse> transaction(@Body IMPSTransactionRequest request);
+		Call<IMPSTransactionResponse> transaction(@Body IMPSTransactionRequest request, @Tag Logger logger);
 
 		@POST("impsBeneficiaryVerification")
 		Call<IMPSTransactionResponse> verification(@Body IMPSTransactionRequest request);
@@ -55,7 +56,7 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 
 	@Override
 	public final TansactionResponse transaction(final ISO8583Message message, final Logger logger) {
-
+		logger.info("processing transaction at core banking.");
 		IMPSTransactionResponse impsTransactionResponse = new IMPSTransactionResponse();
 		try {
 			TLV                    de120   = TLV.parse(message.get(120));
@@ -92,16 +93,16 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			request.RRNNo          = message.get(37);
 			request.transAmt       = Double.parseDouble(message.get(4)) / 100.0;
 			RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
-			Call<IMPSTransactionResponse>     call     = service.transaction(request);
+			Call<IMPSTransactionResponse>     call     = service.transaction(request, logger);
 			Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
 			return new TansactionResponse(impsTransactionResponse);
 		} catch (ConnectException e) {
-			e.printStackTrace();
+			logger.error(e);
 			impsTransactionResponse.response = "08";
 			return new TansactionResponse(impsTransactionResponse);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			impsTransactionResponse.response = "91";
 			return new TansactionResponse(impsTransactionResponse);
 		}

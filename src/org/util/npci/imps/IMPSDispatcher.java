@@ -39,6 +39,7 @@ public final class IMPSDispatcher extends LogonDispatcher {
 			else if (IMPSTransactionType.P2P_TRANSACTION.equals(transactionType)) isDispatched = config.schedular.execute(new P2PTransaction(request, this));
 			else if (IMPSTransactionType.P2P_VERIFICATION.equals(transactionType)) isDispatched = config.schedular.execute(new P2PVerification(request, this));
 		}
+		config.corelogger.info(config.bankId, request.get(37)+" dispatched : "+isDispatched);
 		return isDispatched;
 	}
 
