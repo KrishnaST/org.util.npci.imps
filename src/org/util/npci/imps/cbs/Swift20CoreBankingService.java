@@ -56,7 +56,6 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 
 	@Override
 	public final TansactionResponse transaction(final ISO8583Message message, final Logger logger) {
-
 		IMPSTransactionResponse impsTransactionResponse = new IMPSTransactionResponse();
 		try {
 			TLV                    de120   = TLV.parse(message.get(120));
@@ -68,12 +67,12 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 				request.benfIFSC  = de120.get("059");
 				request.accountNo = de120.get("062");
 				request.ifscCode  = de120.get("059");
+				request.remitterAccNo  = de120.get("062");
 			} else {
 				request.transType = "P2P";
 				final String   mmid           = message.get(2).substring(0, 4) + de120.get("049");
 				final String   mobile         = message.get(2).substring(9);
 				AccountDetails accountDetails = dispatcher.databaseService.getAccountDetails(mobile, mmid, logger);
-				;
 				if (accountDetails == null) {
 					logger.info("account details not found.");
 					return new TansactionResponse("M0", "Account Not found.");
@@ -87,7 +86,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			}
 
 			request.narration      = de120.get("051");
-			request.remitterAccNo  = message.get(102);
+			//request.remitterAccNo  = message.get(102);
 			request.remitterMMID   = de120.get("050").substring(0, 7);
 			request.remitterMobile = "91" + de120.get("050").substring(7);
 			request.RRNNo          = message.get(37);
@@ -96,7 +95,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			Call<IMPSTransactionResponse>     call     = service.transaction(request, logger);
 			Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
-			return new TansactionResponse(impsTransactionResponse);
+			return new TansactionResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			impsTransactionResponse.response = "08";
@@ -117,14 +116,15 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			IMPSTransactionRequest request = new IMPSTransactionRequest();
 
 			if (de120.get("001").equals(IMPSTransactionType.P2A_VERIFICATION)) {
-				request.transType = IMPSTransactionType.P2A_VERIFICATION;
+				request.transType = "P2A";
 				request.benfAccNo = de120.get("062");
 				request.benfIFSC  = de120.get("059");
 
 				request.accountNo = de120.get("062");
 				request.ifscCode  = de120.get("059");
+				request.remitterAccNo  = de120.get("062");
 			} else {
-				request.transType = IMPSTransactionType.P2P_VERIFICATION;
+				request.transType = "P2P";
 				final String   mmid           = message.get(2).substring(0, 4) + de120.get("049");
 				final String   mobile         = message.get(2).substring(9);
 				AccountDetails accountDetails = dispatcher.databaseService.getAccountDetails(mobile, mmid, logger);
@@ -142,7 +142,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			}
 
 			request.narration      = de120.get("051");
-			request.remitterAccNo  = message.get(102);
+			//request.remitterAccNo  = message.get(102);
 			request.remitterMMID   = de120.get("050").substring(0, 7);
 			request.remitterMobile = "91" + de120.get("050").substring(7);
 			request.RRNNo          = message.get(37);
@@ -151,7 +151,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			Call<IMPSTransactionResponse>     call     = service.verification(request, logger);
 			Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
-			return new VerificationResponse(impsTransactionResponse);
+			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			impsTransactionResponse.response = "08";
