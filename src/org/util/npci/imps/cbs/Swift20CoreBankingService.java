@@ -77,6 +77,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 					logger.info("account details not found.");
 					return new TansactionResponse("M0", "Account Not found.");
 				}
+				request.remitterAccNo  = accountDetails.accNo15;
 				request.benfAccNo = accountDetails.accNo15;
 				request.accountNo = accountDetails.accNo15;
 				//Not sent by earlier versions.
@@ -128,11 +129,11 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 				final String   mmid           = message.get(2).substring(0, 4) + de120.get("049");
 				final String   mobile         = message.get(2).substring(9);
 				AccountDetails accountDetails = dispatcher.databaseService.getAccountDetails(mobile, mmid, logger);
-				;
 				if (accountDetails == null) {
 					logger.info("account details not found.");
 					return new VerificationResponse("M0", "Account Not found.");
 				}
+				request.remitterAccNo  = accountDetails.accNo15;
 				request.benfAccNo = accountDetails.accNo15;
 				request.accountNo = accountDetails.accNo15;
 				//Not sent by earlier versions.
