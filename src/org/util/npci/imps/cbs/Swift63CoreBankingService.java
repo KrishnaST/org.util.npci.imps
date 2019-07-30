@@ -161,7 +161,6 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			impsTransactionResponse.response = "91";
 			return new VerificationResponse(impsTransactionResponse);
 		}
-
 	}
 
 }
