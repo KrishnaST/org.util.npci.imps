@@ -5,13 +5,11 @@ import org.util.iso8583.ISO8583Message;
 public class TranUtil {
 
 	public static final void removeNotRequired(ISO8583Message issuerResponse) {
-		issuerResponse.remove(14);
-		issuerResponse.remove(35);
-		issuerResponse.remove(40);
-		issuerResponse.remove(45);
-		issuerResponse.remove(52);
-		issuerResponse.remove(61);
-		issuerResponse.remove(63);
+		issuerResponse.remove(18);
+		issuerResponse.remove(22);
+		issuerResponse.remove(25);
+		issuerResponse.remove(42);
+		issuerResponse.remove(43);
 	}
 	
 	public static final String truncateString(final String s, final int len) {
