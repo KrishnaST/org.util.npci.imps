@@ -33,7 +33,7 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 		Call<IMPSTransactionResponse> transaction(@Body IMPSTransactionRequest request, @Tag Logger logger);
 
 		@POST("impsBeneficiaryVerification")
-		Call<IMPSTransactionResponse> verification(@Body IMPSTransactionRequest request);
+		Call<IMPSTransactionResponse> verification(@Body IMPSTransactionRequest request, @Tag Logger logger);
 	}
 
 	private final Retrofit retrofit;
@@ -148,7 +148,7 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			request.RRNNo          = message.get(37);
 			request.transAmt       = Double.parseDouble(message.get(4)) / 100.0;
 			RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
-			Call<IMPSTransactionResponse>     call     = service.verification(request);
+			Call<IMPSTransactionResponse>     call     = service.verification(request, logger);
 			Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
 			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
