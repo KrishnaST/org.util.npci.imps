@@ -99,11 +99,11 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			return new TansactionResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			impsTransactionResponse.response = "08";
+			impsTransactionResponse.errorCode = "08";
 			return new TansactionResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
-			impsTransactionResponse.response = "91";
+			impsTransactionResponse.errorCode = "91";
 			return new TansactionResponse(impsTransactionResponse);
 		}
 
@@ -155,11 +155,11 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			impsTransactionResponse.response = "08";
+			impsTransactionResponse.errorCode = "08";
 			return new VerificationResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
-			impsTransactionResponse.response = "91";
+			impsTransactionResponse.errorCode = "91";
 			return new VerificationResponse(impsTransactionResponse);
 		}
 	}
