@@ -29,10 +29,10 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 
 	public interface RetroCoreBankingService {
 
-		@POST("InwardImpsTransaction")
+		@POST("transaction/InwardImpsTransaction")
 		Call<IMPSTransactionResponse> transaction(@Body IMPSTransactionRequest request, @Tag Logger logger);
 
-		@POST("impsBeneficiaryVerification")
+		@POST("transaction/impsBeneficiaryVerification")
 		Call<IMPSTransactionResponse> verification(@Body IMPSTransactionRequest request, @Tag Logger logger);
 	}
 

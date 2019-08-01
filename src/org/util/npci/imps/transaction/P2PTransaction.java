@@ -26,7 +26,7 @@ public final class P2PTransaction extends IssuerTransaction<IMPSDispatcher> {
 			request.put(39, response.responseCode);
 			request.put(103, response.beneficiaryAccount);
 			request.put(120, DE120.put("046", TranUtil.truncateString(response.beneficiaryName, 20)).build());
-			logger.info("Resonse DE120", DE120.toString());
+			logger.info("Response DE120", DE120.toString());
 			TranUtil.removeNotRequired(request);
 			dispatcher.config.coreconnect.sendResponseToNPCI(request, logger);
 		} catch (Exception e) {logger.info(e);}
