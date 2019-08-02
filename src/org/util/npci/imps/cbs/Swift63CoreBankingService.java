@@ -40,7 +40,6 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 
 	public Swift63CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) throws ConfigurationNotFoundException {
 		super(config, dispatcher);
-		System.out.println(PropertyName.CBS_IP+" : "+config.getString(PropertyName.CBS_IP));
 		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(PropertyName.CBS_IP))
 				.withLogging(config.getStringSupressException(PropertyName.RETROFIT_LOGGING_LEVEL))
 				.readTimeout(config.getIntSupressException(PropertyName.RETROFIT_READ_TIMEOUT_SEC), TimeUnit.SECONDS)
@@ -59,8 +58,8 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 		logger.info("processing transaction at core banking.");
 		IMPSTransactionResponse impsTransactionResponse = new IMPSTransactionResponse();
 		try {
-			TLV                    de120   = TLV.parse(message.get(120));
-			IMPSTransactionRequest request = new IMPSTransactionRequest();
+			final TLV                    de120   = TLV.parse(message.get(120));
+			final IMPSTransactionRequest request = new IMPSTransactionRequest();
 
 			if (de120.get("001").equals(IMPSTransactionType.P2A_TRANSACTION)) {
 				request.transType = "P2A";
@@ -92,9 +91,9 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			request.remitterMobile = "91" + de120.get("050").substring(7);
 			request.RRNNo          = message.get(37);
 			request.transAmt       = Double.parseDouble(message.get(4)) / 100.0;
-			RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
-			Call<IMPSTransactionResponse>     call     = service.transaction(request, logger);
-			Response<IMPSTransactionResponse> response = call.execute();
+			final RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
+			final Call<IMPSTransactionResponse>     call     = service.transaction(request, logger);
+			final Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
 			return new TansactionResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
@@ -111,10 +110,11 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 
 	@Override
 	public final VerificationResponse verification(final ISO8583Message message, final Logger logger) {
+		logger.info("processing verification at core banking.");
 		IMPSTransactionResponse impsTransactionResponse = new IMPSTransactionResponse();
 		try {
-			TLV                    de120   = TLV.parse(message.get(120));
-			IMPSTransactionRequest request = new IMPSTransactionRequest();
+			final TLV                    de120   = TLV.parse(message.get(120));
+			final IMPSTransactionRequest request = new IMPSTransactionRequest();
 
 			if (de120.get("001").equals(IMPSTransactionType.P2A_VERIFICATION)) {
 				request.transType = IMPSTransactionType.P2A_VERIFICATION;
@@ -125,10 +125,9 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 				request.ifscCode  = de120.get("059");
 			} else {
 				request.transType = IMPSTransactionType.P2P_VERIFICATION;
-				final String   mmid           = message.get(2).substring(0, 4) + de120.get("049");
-				final String   mobile         = message.get(2).substring(9);
-				AccountDetails accountDetails = dispatcher.databaseService.getAccountDetails(mobile, mmid, logger);
-				;
+				final String         mmid           = message.get(2).substring(0, 4) + de120.get("049");
+				final String         mobile         = message.get(2).substring(9);
+				final AccountDetails accountDetails = dispatcher.databaseService.getAccountDetails(mobile, mmid, logger);
 				if (accountDetails == null) {
 					logger.info("account details not found.");
 					return new VerificationResponse("M0", "Account Not found.");
@@ -147,9 +146,9 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			request.remitterMobile = "91" + de120.get("050").substring(7);
 			request.RRNNo          = message.get(37);
 			request.transAmt       = Double.parseDouble(message.get(4)) / 100.0;
-			RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
-			Call<IMPSTransactionResponse>     call     = service.verification(request, logger);
-			Response<IMPSTransactionResponse> response = call.execute();
+			final RetroCoreBankingService           service  = retrofit.create(RetroCoreBankingService.class);
+			final Call<IMPSTransactionResponse>     call     = service.verification(request, logger);
+			final Response<IMPSTransactionResponse> response = call.execute();
 			impsTransactionResponse = response.body();
 			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
