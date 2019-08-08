@@ -1,8 +1,8 @@
-package org.util.npci.imps.transaction;
+package org.util.npci.imps.internals;
 
 import org.util.iso8583.ISO8583Message;
 
-public class TranUtil {
+public final class TranUtil {
 
 	public static final void removeNotRequired(ISO8583Message issuerResponse) {
 		issuerResponse.remove(18);

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.util.datautil.TLV;
 import org.util.iso8583.ISO8583Message;
+import org.util.iso8583.npci.IMPSResponseCode;
 import org.util.iso8583.npci.constants.IMPSTransactionType;
 import org.util.nanolog.Logger;
 import org.util.npci.api.ConfigurationNotFoundException;
@@ -60,7 +61,6 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 		try {
 			final TLV                    de120   = TLV.parse(message.get(120));
 			final IMPSTransactionRequest request = new IMPSTransactionRequest();
-
 			if (de120.get("001").equals(IMPSTransactionType.P2A_TRANSACTION)) {
 				request.transType = "P2A";
 				request.benfAccNo = de120.get("062");
@@ -98,11 +98,11 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			return new TansactionResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			logger.error(e);
-			impsTransactionResponse.errorCode = "08";
+			impsTransactionResponse.errorCode = IMPSResponseCode.ISSUER_NODE_OFFLINE;
 			return new TansactionResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			logger.error(e);
-			impsTransactionResponse.errorCode = "91";
+			impsTransactionResponse.errorCode = IMPSResponseCode.PROCESSOR_DOWN;
 			return new TansactionResponse(impsTransactionResponse);
 		}
 
@@ -115,7 +115,6 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 		try {
 			final TLV                    de120   = TLV.parse(message.get(120));
 			final IMPSTransactionRequest request = new IMPSTransactionRequest();
-
 			if (de120.get("001").equals(IMPSTransactionType.P2A_VERIFICATION)) {
 				request.transType = IMPSTransactionType.P2A_VERIFICATION;
 				request.benfAccNo = de120.get("062");
@@ -153,11 +152,11 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			impsTransactionResponse.errorCode = "08";
+			impsTransactionResponse.errorCode = IMPSResponseCode.ISSUER_NODE_OFFLINE;
 			return new VerificationResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
-			impsTransactionResponse.errorCode = "91";
+			impsTransactionResponse.errorCode = IMPSResponseCode.PROCESSOR_DOWN;
 			return new VerificationResponse(impsTransactionResponse);
 		}
 	}

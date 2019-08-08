@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.util.datautil.TLV;
 import org.util.iso8583.ISO8583Message;
+import org.util.iso8583.npci.IMPSResponseCode;
 import org.util.iso8583.npci.constants.IMPSTransactionType;
 import org.util.nanolog.Logger;
 import org.util.npci.api.ConfigurationNotFoundException;
@@ -100,7 +101,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			return new TansactionResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			impsTransactionResponse.errorCode = "08";
+			impsTransactionResponse.errorCode = IMPSResponseCode.ISSUER_NODE_OFFLINE;
 			return new TansactionResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -157,7 +158,7 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 			return new VerificationResponse(impsTransactionResponse, request.benfAccNo, message.get(11));
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			impsTransactionResponse.errorCode = "08";
+			impsTransactionResponse.errorCode = IMPSResponseCode.ISSUER_NODE_OFFLINE;
 			return new VerificationResponse(impsTransactionResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
