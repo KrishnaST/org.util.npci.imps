@@ -16,7 +16,7 @@ public final class P2AVerification extends IssuerTransaction<IMPSDispatcher> {
 	}
 
 	@Override
-	protected void execute(Logger logger) {
+	protected void execute(final Logger logger) {
 		try {
 			final TLV DE120 = TLV.parse(request.get(120));
  			logger.info("Request DE120", DE120.toString());

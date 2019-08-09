@@ -5,6 +5,7 @@ import org.util.iso8583.ISO8583Message;
 public final class TranUtil {
 
 	public static final void removeNotRequired(ISO8583Message issuerResponse) {
+		if(issuerResponse == null) return;
 		issuerResponse.remove(18);
 		issuerResponse.remove(22);
 		issuerResponse.remove(25);

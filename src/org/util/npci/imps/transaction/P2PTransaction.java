@@ -16,7 +16,7 @@ public final class P2PTransaction extends IssuerTransaction<IMPSDispatcher> {
 	}
 
 	@Override
-	protected void execute(Logger logger) {
+	protected void execute(final Logger logger) {
 		try {
 			final TLV DE120 = TLV.parse(request.get(120));
  			logger.info("Request DE120", DE120.toString());
@@ -29,7 +29,7 @@ public final class P2PTransaction extends IssuerTransaction<IMPSDispatcher> {
 			request.put(120, DE120.put("046", TranUtil.truncateString(response.beneficiaryName, 20)).build());
 			logger.info("Response DE120", DE120.toString());
 			TranUtil.removeNotRequired(request);
-			config.coreconnect.sendResponseToNPCI(request, logger);
+			sendResponseToNPCI(request, response.responseCode, logger);
 		} catch (Exception e) {logger.info(e);}
 	}
 
