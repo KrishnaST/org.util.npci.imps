@@ -19,5 +19,4 @@ public final class InternalCoreBankingServiceBuilder extends CoreBankingServiceB
 		else if ("SWIFT63".equals(config.coreBankingType)) return new Swift63CoreBankingService(config, dispatcher);
 		throw new ConfigurationNotFoundException("");
 	}
-
 }

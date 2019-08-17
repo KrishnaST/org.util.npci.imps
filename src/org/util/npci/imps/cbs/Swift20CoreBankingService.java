@@ -42,10 +42,8 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 	public Swift20CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) throws ConfigurationNotFoundException {
 		super(config, dispatcher);
 		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(PropertyName.CBS_IP))
-				.withLogging(config.getStringSupressException(PropertyName.RETROFIT_LOGGING_LEVEL))
-				.readTimeout(config.getIntSupressException(PropertyName.RETROFIT_READ_TIMEOUT_SEC), TimeUnit.SECONDS)
-				.writeTimeout(config.getIntSupressException(PropertyName.RETROFIT_WRITE_TIMEOUT_SEC), TimeUnit.SECONDS)
-				.connectTimeout(config.getIntSupressException(PropertyName.RETROFIT_CONNECT_TIMEOUT_SEC), TimeUnit.SECONDS)
+				.withLogging(config.getStringSupressException(PropertyName.CBS_LOGGING_LEVEL))
+				.readTimeout(config.issuerTimeout, TimeUnit.SECONDS)
 				.build();
 		config.corelogger.info("retrofit initialized : " + retrofit);
 	}
