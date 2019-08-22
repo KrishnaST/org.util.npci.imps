@@ -11,7 +11,7 @@ import org.util.npci.imps.internals.TranUtil;
 
 public final class P2PTransaction extends IssuerTransaction<IMPSDispatcher> {
 
-	public P2PTransaction(ISO8583Message request, IMPSDispatcher dispatcher) {
+	public P2PTransaction(final ISO8583Message request, final IMPSDispatcher dispatcher) {
 		super(request, dispatcher);
 	}
 

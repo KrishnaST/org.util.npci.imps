@@ -11,7 +11,7 @@ import org.util.npci.imps.internals.TranUtil;
 
 public final class P2AVerification extends IssuerTransaction<IMPSDispatcher> {
 
-	public P2AVerification(ISO8583Message request, IMPSDispatcher dispatcher) {
+	public P2AVerification(final ISO8583Message request, final IMPSDispatcher dispatcher) {
 		super(request, dispatcher);
 	}
 
