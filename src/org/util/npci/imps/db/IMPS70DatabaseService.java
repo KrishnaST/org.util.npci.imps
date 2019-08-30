@@ -21,7 +21,7 @@ public class IMPS70DatabaseService extends DatabaseService {
 	}
 
 	@Override
-	public final AccountDetails getAccountDetails(String mobile, String mmid, Logger logger) {
+	public final AccountDetails getAccountDetails(final String mobile, final String mmid, final Logger logger) {
 		try(Connection con = config.dataSource.getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT ACCTNO, ACCTNO15DIGIT, BRCODE FROM ACCOUNTS WHERE MOBILENO like ? AND MMID = ?")) {
 			ps.setString(1, "%"+mobile+"%");
@@ -34,6 +34,11 @@ public class IMPS70DatabaseService extends DatabaseService {
 			
 		} catch (Exception e) {logger.error(e);}
 		return null;
+	}
+
+	@Override
+	protected final boolean encrypt() {
+		return false;
 	}
 
 }

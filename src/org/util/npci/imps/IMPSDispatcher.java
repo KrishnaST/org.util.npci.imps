@@ -29,7 +29,7 @@ public final class IMPSDispatcher extends LogonDispatcher {
 	}
 
 	@Override
-	public final boolean dispatch(ISO8583Message request) {
+	public final boolean dispatch(final ISO8583Message request) {
 		boolean isDispatched = false;
 		isDispatched = super.dispatch(request);
 		if (!isDispatched) {
