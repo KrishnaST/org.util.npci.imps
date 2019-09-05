@@ -9,10 +9,10 @@ import org.util.npci.coreconnect.CoreConfig;
 import org.util.npci.imps.IMPSDispatcher;
 import org.util.npci.imps.cbs.model.AccountDetails;
 
-public class IMPS70DatabaseService extends DatabaseService {
+public final class IMPS70DatabaseService extends DatabaseService {
 
 	public IMPS70DatabaseService(final CoreConfig config, final IMPSDispatcher dispatcher) {
-		super(config, dispatcher);
+		super(dispatcher);
 	}
 
 	@Override
@@ -35,10 +35,4 @@ public class IMPS70DatabaseService extends DatabaseService {
 		} catch (Exception e) {logger.error(e);}
 		return null;
 	}
-
-	@Override
-	protected final boolean encrypt() {
-		return false;
-	}
-
 }

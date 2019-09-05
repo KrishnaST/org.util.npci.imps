@@ -2,18 +2,16 @@ package org.util.npci.imps.db;
 
 import org.util.nanolog.Logger;
 import org.util.npci.coreconnect.CoreConfig;
-import org.util.npci.coreconnect.CoreDatabaseService;
 import org.util.npci.imps.IMPSDispatcher;
 import org.util.npci.imps.cbs.model.AccountDetails;
 
-public abstract class DatabaseService extends CoreDatabaseService<IMPSDispatcher> {
+public abstract class DatabaseService {
 
 	public final IMPSDispatcher dispatcher;
 	public final CoreConfig     config;
 
-	public DatabaseService(final CoreConfig config, final IMPSDispatcher dispatcher) {
-		super(dispatcher);
-		this.config     = config;
+	public DatabaseService(final IMPSDispatcher dispatcher) {
+		this.config     = dispatcher.config;
 		this.dispatcher = dispatcher;
 	}
 
