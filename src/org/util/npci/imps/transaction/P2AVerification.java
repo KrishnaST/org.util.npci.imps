@@ -17,9 +17,9 @@ public final class P2AVerification extends IssuerTransaction<IMPSDispatcher> {
 	}
 
 	@Override
-	protected boolean execute(final Logger logger) {
+	protected final boolean execute(final Logger logger) {
 		try {
-			final long txid = config.coreDatabaseService.registerTransaction(request, "P2A-ISSUER", logger);
+			final long txid = dispatcher.databaseService.registerTransaction(request, "P2A-ISSUER", logger);
 			logger.info("transaction registered with id", Long.toString(txid));
 			final TLV DE120 = TLV.parse(request.get(120));
  			logger.info("Request DE120", DE120.toString());
@@ -31,7 +31,7 @@ public final class P2AVerification extends IssuerTransaction<IMPSDispatcher> {
 			request.put(120, DE120.put("046", TranUtil.truncateString(response.beneficiaryName, 20)).build());
 			logger.info("Response DE120", DE120.toString());
 			ISOUtil.removeNotRequiredElements(request);
-			final boolean isregistered = config.coreDatabaseService.registerResponse(txid, request, logger);
+			final boolean isregistered = dispatcher.databaseService.registerResponse(txid, request, logger);
 			logger.info("response registered ", Boolean.toString(isregistered));
 			return config.coreconnect.sendResponseToNPCI(request, logger);
 		} catch (Exception e) {logger.info(e);}

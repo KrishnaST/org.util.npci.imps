@@ -12,7 +12,7 @@ import org.util.npci.api.ConfigurationNotFoundException;
 import org.util.npci.coreconnect.CoreConfig;
 import org.util.npci.coreconnect.util.RetroClientBuilder;
 import org.util.npci.imps.IMPSDispatcher;
-import org.util.npci.imps.PropertyName;
+import org.util.npci.imps.POSPropertyName;
 import org.util.npci.imps.cbs.model.AccountDetails;
 import org.util.npci.imps.cbs.model.IMPSTransactionRequest;
 import org.util.npci.imps.cbs.model.IMPSTransactionResponse;
@@ -41,8 +41,8 @@ public final class Swift20CoreBankingService extends CoreBankingService {
 	
 	public Swift20CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) throws ConfigurationNotFoundException {
 		super(config, dispatcher);
-		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(PropertyName.CBS_IP))
-				.withLogging(config.getStringSupressException(PropertyName.CBS_LOGGING_LEVEL))
+		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(POSPropertyName.CBS_IP))
+				.withLogging(config.getStringSupressException(POSPropertyName.CBS_LOGGING_LEVEL))
 				.readTimeout(config.issuerTimeout, TimeUnit.SECONDS)
 				.build();
 		config.corelogger.info("retrofit initialized : " + retrofit);
