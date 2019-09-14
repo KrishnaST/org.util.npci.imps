@@ -40,7 +40,7 @@ public final class Swift63CoreBankingService extends CoreBankingService {
 	private final Retrofit retrofit;
 
 	public Swift63CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) throws ConfigurationNotFoundException {
-		super(config, dispatcher);
+		super(dispatcher);
 		retrofit = RetroClientBuilder.newBuilder().baseURL(config.getString(POSPropertyName.CBS_IP))
 				.withLogging(config.getStringSupressException(POSPropertyName.CBS_LOGGING_LEVEL))
 				.readTimeout(config.issuerTimeout, TimeUnit.SECONDS).build();

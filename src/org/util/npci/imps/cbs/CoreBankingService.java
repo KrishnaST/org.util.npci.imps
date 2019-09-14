@@ -2,7 +2,6 @@ package org.util.npci.imps.cbs;
 
 import org.util.iso8583.ISO8583Message;
 import org.util.nanolog.Logger;
-import org.util.npci.coreconnect.CoreConfig;
 import org.util.npci.imps.IMPSDispatcher;
 import org.util.npci.imps.cbs.model.TansactionResponse;
 import org.util.npci.imps.cbs.model.VerificationResponse;
@@ -10,10 +9,8 @@ import org.util.npci.imps.cbs.model.VerificationResponse;
 public abstract class CoreBankingService {
 
 	public final IMPSDispatcher dispatcher;
-	public final CoreConfig     config;
 
-	public CoreBankingService(final CoreConfig config, final IMPSDispatcher dispatcher) {
-		this.config     = config;
+	public CoreBankingService(final IMPSDispatcher dispatcher) {
 		this.dispatcher = dispatcher;
 	}
 
