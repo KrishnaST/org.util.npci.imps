@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.util.datautil.TLV;
 import org.util.iso8583.ISO8583Message;
 import org.util.iso8583.npci.IMPSResponseCode;
-import org.util.iso8583.npci.constants.IMPSTransactionType;
+import org.util.iso8583.npci.imps.IMPSTransactionType;
 import org.util.nanolog.Logger;
 import org.util.npci.api.ConfigurationNotFoundException;
 import org.util.npci.coreconnect.CoreConfig;

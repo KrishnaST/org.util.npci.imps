@@ -2,7 +2,7 @@ package org.util.npci.imps;
 
 import org.util.datautil.TLV;
 import org.util.iso8583.ISO8583Message;
-import org.util.iso8583.npci.constants.IMPSTransactionType;
+import org.util.iso8583.npci.imps.IMPSTransactionType;
 import org.util.npci.api.ConfigurationNotFoundException;
 import org.util.npci.coreconnect.CoreConfig;
 import org.util.npci.coreconnect.issuer.LogonDispatcher;
